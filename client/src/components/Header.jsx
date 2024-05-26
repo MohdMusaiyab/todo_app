@@ -8,7 +8,7 @@ const Header = () => {
       <div className="container mx-auto flex justify-between items-center px-6">
         <div className="text-white font-bold text-3xl">
           <Link to="/" className="hover:text-gray-300 transition duration-300">
-            Todo App
+            <img src="https://static-00.iconduck.com/assets.00/todo-icon-1024x1024-7nszgsj6.png" className="h-[50px] w-[50px]"></img>
           </Link>
         </div>
         <nav className="space-x-4">

@@ -9,6 +9,7 @@ import UserTask from "./pages/UserTask";
 import UpdateTask from "./pages/UpdateTask";
 import About from "./pages/About";
 import CreateTask from "./pages/CreateTask";
+import Error from "./pages/Error";
 const App = () => {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/update-task/:id" element={<UpdateTask></UpdateTask>}></Route>
         <Route path="/about" element={<About></About>}></Route>
         <Route path="/create-task" element={<CreateTask></CreateTask>}></Route>
+        <Route path="*" element={<Error></Error>}></Route>
       </Routes>
       <Footer></Footer>
     </BrowserRouter>

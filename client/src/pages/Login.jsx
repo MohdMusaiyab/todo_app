@@ -18,6 +18,7 @@ const LoginRegister = () => {
     password: "",
     username: "",
   });
+  const [errormessage,setErrorMessage]=useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +43,7 @@ const LoginRegister = () => {
       } else {
         dispatch(signInFailure(response.data));
         console.error("Login error:", response.data);
+        setErrorMessage("Something Went Wrong");
       }
       // Handle login success, e.g., save token, navigate, etc.
     } catch (error) {
@@ -69,6 +71,7 @@ const LoginRegister = () => {
       }
     } catch (error) {
       dispatch(signInFailure(error));
+      setErrorMessage("Something went wrong")
       // Handle register error, e.g., show error message
     }
   };
@@ -222,6 +225,7 @@ const LoginRegister = () => {
                     Login
                   </button>
                 </p>
+                
               </div>
             </>
           )}

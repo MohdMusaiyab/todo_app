@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import {
+  signOutUserFailure,
+  signOutUserStart,
+  signOutUserSuccess,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const UserTask = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
 
@@ -56,7 +65,16 @@ const UserTask = () => {
       console.error("Error deleting task:", error);
     }
   };
-
+  const handleSignOut = () => {
+    try {
+      dispatch(signOutUserStart());
+      Cookies.remove("token");
+      dispatch(signOutUserSuccess());
+      navigate("/");
+    } catch (error) {
+      dispatch(signOutUserFailure());
+    }
+  };
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <h1 className="text-2xl font-bold mb-4">User Tasks</h1>
@@ -69,7 +87,7 @@ const UserTask = () => {
             <div>
               <h2 className="text-xl font-semibold">{task.title}</h2>
               <p>{task.description}</p>
-              <p>Due Date: {task.dueDate}</p>
+              <p>Due Date: {format(new Date(task.dueDate), "MMMM d, yyyy")}</p>
               <select
                 value={task.status}
                 className="mr-2 p-2 border border-gray-300 rounded"
@@ -104,6 +122,14 @@ const UserTask = () => {
         >
           Create Task
         </Link>
+      </div>
+      <div className="flex justify-center">
+        <button
+          onClick={handleSignOut}
+          className="bg-red text-white px-4 py-2 rounded"
+        >
+          Sign Out
+        </button>
       </div>
     </div>
   );
